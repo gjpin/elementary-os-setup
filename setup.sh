@@ -9,6 +9,15 @@ GOLANG_VERSION=1.17.5
 sudo flatpak override --filesystem=/usr/share/themes:ro
 sudo flatpak override --filesystem=/usr/share/icons:ro
 
+# Install current theme as Flatpak
+sudo apt -y install ostree appstream-util
+git clone https://github.com/gjpin/stylepak.git
+cd stylepak
+chmod +x stylepak
+./stylepak install-system
+cd ..
+rm -rf stylepak
+
 # Shortcuts
 gsettings set org.gnome.settings-daemon.plugins.media-keys area-screenshot "['<Shift><Super>s']"
 gsettings set org.gnome.settings-daemon.plugins.media-keys home "['<Super>e']"
@@ -17,11 +26,11 @@ gsettings set org.gnome.desktop.wm.keybindings close "['<Shift><Super>q']"
 
 # Misc changes
 gsettings set io.elementary.desktop.wingpanel.power show-percentage true
-gsettings set io.elementary.settings-daemon.prefers-color-scheme prefer-dark-schedule "'sunset-to-sunrise'"
 gsettings set io.elementary.desktop.agent-geoclue2 location-enabled false
 gsettings set org.gnome.desktop.sound event-sounds false
 gsettings set org.gnome.desktop.peripherals.touchpad disable-while-typing false
 gsettings set org.pantheon.desktop.gala.behavior overlay-action "'io.elementary.wingpanel --toggle-indicator=app-launcher'"
+gsettings set io.elementary.terminal.settings unsafe-paste-alert false
 
 # Allow volume above 100%
 gsettings set org.gnome.desktop.sound allow-volume-above-100-percent true
