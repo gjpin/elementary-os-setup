@@ -9,6 +9,20 @@ GOLANG_VERSION=1.17.5
 sudo flatpak override --filesystem=/usr/share/themes:ro
 sudo flatpak override --filesystem=/usr/share/icons:ro
 
+# Shortcuts
+gsettings set org.gnome.settings-daemon.plugins.media-keys area-screenshot "['<Shift><Super>s']"
+gsettings set org.gnome.settings-daemon.plugins.media-keys home "['<Super>e']"
+gsettings set org.gnome.settings-daemon.plugins.media-keys terminal "['<Super>Return']"
+gsettings set org.gnome.desktop.wm.keybindings close "['<Shift><Super>q']"
+
+# Misc changes
+gsettings set io.elementary.desktop.wingpanel.power show-percentage true
+gsettings set io.elementary.settings-daemon.prefers-color-scheme prefer-dark-schedule "'sunset-to-sunrise'"
+gsettings set io.elementary.desktop.agent-geoclue2 location-enabled false
+gsettings set org.gnome.desktop.sound event-sounds false
+gsettings set org.gnome.desktop.peripherals.touchpad disable-while-typing false
+gsettings set org.pantheon.desktop.gala.behavior overlay-action "'io.elementary.wingpanel --toggle-indicator=app-launcher'"
+
 # Allow volume above 100%
 gsettings set org.gnome.desktop.sound allow-volume-above-100-percent true
 
@@ -21,9 +35,6 @@ sudo ufw enable
 
 # Install common software
 sudo apt -y install git build-essential meson software-properties-common curl
-
-# Install Vulkan drivers
-sudo apt -y install mesa-vulkan-drivers
 
 # Install Nnome system monitor and disk utility
 sudo apt -y install gnome-system-monitor gnome-disk-utility
@@ -74,18 +85,20 @@ sudo flatpak remote-add --if-not-exists flathub-beta https://flathub.org/beta-re
 flatpak update --appstream
 
 # Install Firefox Flatpak
-flatpak install -y flathub org.mozilla.firefox
-flatpak install -y flathub org.freedesktop.Platform.ffmpeg-full/x86_64/21.08
+sudo flatpak install -y flathub org.mozilla.firefox
+sudo flatpak install -y flathub org.freedesktop.Platform.ffmpeg-full/x86_64/21.08
 
 # Open Firefox in headless mode and then close it to create profile folder
 timeout 5 flatpak run org.mozilla.firefox --headless
 
 # Import Firefox user settings
-tee -a ${HOME}/.var/app/org.mozilla.firefox/.mozilla/firefox/*-release/user.js << EOF
+cd ${HOME}/.var/app/org.mozilla.firefox/.mozilla/firefox/*-release
+tee -a user.js << EOF
 user_pref("toolkit.legacyUserProfileCustomizations.stylesheets", true);
 user_pref("media.ffmpeg.vaapi.enabled", true);
 user_pref("media.rdd-ffmpeg.enabled", true);
 EOF
+cd
 
 # Install Elementary OS Firefox theme
 wget https://raw.githubusercontent.com/Zonnev/elementaryos-firefox-theme/elementaryos-firefox-theme/install.sh
@@ -103,28 +116,28 @@ sudo flatpak override --nodevice=all com.belmoussaoui.Authenticator
 sudo flatpak override --unshare=network com.belmoussaoui.Authenticator
 
 # Install Flatpaks
-flatpak install -y appcenter com.github.bluesabre.darkbar
-flatpak install -y flathub org.gtk.Gtk3theme.Adwaita-dark
-flatpak install -y flathub org.gnome.PasswordSafe
-flatpak install -y flathub com.spotify.Client
-flatpak install -y flathub org.gimp.GIMP
-flatpak install -y flathub org.blender.Blender
-# flatpak install -y flathub org.videolan.VLC
-flatpak install -y flathub org.chromium.Chromium
-flatpak install -y flathub com.github.tchx84.Flatseal
-flatpak install -y flathub-beta com.google.Chrome
-flatpak install -y flathub com.usebottles.bottles
-flatpak install -y flathub org.libreoffice.LibreOffice
+sudo flatpak install -y appcenter com.github.bluesabre.darkbar
+sudo flatpak install -y flathub org.gtk.Gtk3theme.Adwaita-dark
+sudo flatpak install -y flathub org.gnome.PasswordSafe
+sudo flatpak install -y flathub com.spotify.Client
+sudo flatpak install -y flathub org.gimp.GIMP
+sudo flatpak install -y flathub org.blender.Blender
+#sudo flatpak install -y flathub org.videolan.VLC
+sudo flatpak install -y flathub org.chromium.Chromium
+sudo flatpak install -y flathub com.github.tchx84.Flatseal
+sudo flatpak install -y flathub-beta com.google.Chrome
+sudo flatpak install -y flathub com.usebottles.bottles
+sudo flatpak install -y flathub org.libreoffice.LibreOffice
 
 # Install Steam and allow Steam Link on local network
-# flatpak install flathub com.valvesoftware.Steam
+# sudo flatpak install flathub com.valvesoftware.Steam
 # sudo flatpak override --filesystem=/media/${USER}/data/games/steam com.valvesoftware.Steam
 # sudo ufw allow from 192.168.1.0/24 to any port 27036:27037 proto tcp comment "steam link"
 # sudo ufw allow from 192.168.1.0/24 to any port 27031:27036 proto udp comment "steam link"
 
 # Install Lutris
-# flatpak install flathub-beta net.lutris.Lutris//beta
-# flatpak install flathub org.gnome.Platform.Compat.i386 org.freedesktop.Platform.GL32.default org.freedesktop.Platform.GL.default
+# sudo flatpak install flathub-beta net.lutris.Lutris//beta
+# sudo flatpak install flathub org.gnome.Platform.Compat.i386 org.freedesktop.Platform.GL32.default org.freedesktop.Platform.GL.default
 # sudo flatpak override --filesystem=/media/${USER}/data/games/lutris net.lutris.Lutris
 
 # Chrome - Enable GPU acceleration
@@ -213,21 +226,13 @@ sudo ufw reload
 
 # Install Wingpanel Ayatana-Compatibility Indicator
 # https://github.com/Lafydev/wingpanel-indicator-ayatana
-sudo apt -y install libglib2.0-dev libgranite-dev libindicator3-dev libwingpanel-dev indicator-application
-wget https://github.com/Lafydev/wingpanel-indicator-ayatana/blob/master/com.github.lafydev.wingpanel-indicator-ayatana_2.0.8_odin.deb
+sudo apt -y install libglib2.0-dev libgranite-dev libindicator3-dev libwingpanel-dev indicator-application valac
+wget https://github.com/Lafydev/wingpanel-indicator-ayatana/raw/master/com.github.lafydev.wingpanel-indicator-ayatana_2.0.8_odin.deb
 sudo dpkg -i ./com.github.lafydev.wingpanel*.deb
 rm com.github.lafydev.wingpanel-indicator-ayatana_2.0.8_odin.deb
 mkdir -p ~/.config/autostart
 cp /etc/xdg/autostart/indicator-application.desktop ~/.config/autostart/
 sed -i 's/^OnlyShowIn.*/OnlyShowIn=Unity;GNOME;Pantheon;/' ~/.config/autostart/indicator-application.desktop
-
-# Wingpanel legacy icons support
-git clone https://github.com/msmaldi/wingpanel-indicator-na-tray.git
-cd wingpanel-indicator-na-tray
-meson builddir --prefix=/usr
-ninja -C builddir
-sudo ninja -C builddir install
-cd .. && rm -rf wingpanel-indicator-na-tray
 
 # Git configs
 git config --global init.defaultBranch main
