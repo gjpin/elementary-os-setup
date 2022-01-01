@@ -5,6 +5,9 @@ VAULT_VERSION=1.9.2
 TERRAFORM_VERSION=1.1.2
 GOLANG_VERSION=1.17.5
 
+# Install common software
+sudo apt -y install git build-essential meson valac software-properties-common curl git
+
 # Allow Flatpaks to access themes and icons
 sudo flatpak override --filesystem=/usr/share/themes:ro
 sudo flatpak override --filesystem=/usr/share/icons:ro
@@ -41,9 +44,6 @@ sudo ufw default allow outgoing
 sudo ufw allow from 192.168.1.0/24 to any port 22000 proto tcp comment "syncthing"
 sudo ufw allow from 192.168.1.0/24 to any port 21027 proto udp comment "syncthing"
 sudo ufw enable
-
-# Install common software
-sudo apt -y install git build-essential meson software-properties-common curl
 
 # Install Nnome system monitor and disk utility
 sudo apt -y install gnome-system-monitor gnome-disk-utility
@@ -235,7 +235,7 @@ sudo ufw reload
 
 # Install Wingpanel Ayatana-Compatibility Indicator
 # https://github.com/Lafydev/wingpanel-indicator-ayatana
-sudo apt -y install libglib2.0-dev libgranite-dev libindicator3-dev libwingpanel-dev indicator-application valac
+sudo apt -y install libglib2.0-dev libgranite-dev libindicator3-dev libwingpanel-dev indicator-application
 wget https://github.com/Lafydev/wingpanel-indicator-ayatana/raw/master/com.github.lafydev.wingpanel-indicator-ayatana_2.0.8_odin.deb
 sudo dpkg -i ./com.github.lafydev.wingpanel*.deb
 rm com.github.lafydev.wingpanel-indicator-ayatana_2.0.8_odin.deb
