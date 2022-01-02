@@ -5,6 +5,9 @@ VAULT_VERSION=1.9.2
 TERRAFORM_VERSION=1.1.2
 GOLANG_VERSION=1.17.5
 
+# Install HWE edge kernel
+sudo apt -y install linux-generic-hwe-20.04-edge
+
 # Install common software
 sudo apt -y install git build-essential meson valac software-properties-common curl git
 
