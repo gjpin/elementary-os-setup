@@ -1,12 +1,12 @@
 # Versions
 NOMAD_VERSION=1.2.3
-CONSUL_VERSION=1.11.1
+CONSUL_VERSION=1.11.2
 VAULT_VERSION=1.9.2
 TERRAFORM_VERSION=1.1.2
-GOLANG_VERSION=1.17.5
+GOLANG_VERSION=1.17.6
 
 # Install HWE edge kernel
-sudo apt -y install linux-generic-hwe-20.04-edge
+# sudo apt -y install linux-generic-hwe-20.04-edge
 
 # Install common software
 sudo apt -y install git build-essential meson valac software-properties-common curl git
@@ -48,7 +48,7 @@ sudo ufw allow from 192.168.1.0/24 to any port 22000 proto tcp comment "syncthin
 sudo ufw allow from 192.168.1.0/24 to any port 21027 proto udp comment "syncthing"
 sudo ufw enable
 
-# Install Nnome system monitor and disk utility
+# Install Gnome system monitor and disk utility
 sudo apt -y install gnome-system-monitor gnome-disk-utility
 
 # Install and start syncthing
@@ -98,7 +98,6 @@ flatpak update --appstream
 
 # Install Firefox Flatpak
 sudo flatpak install -y flathub org.mozilla.firefox
-sudo flatpak install -y flathub org.freedesktop.Platform.ffmpeg-full/x86_64/21.08
 
 # Open Firefox in headless mode and then close it to create profile folder
 timeout 5 flatpak run org.mozilla.firefox --headless
@@ -129,12 +128,10 @@ sudo flatpak override --unshare=network com.belmoussaoui.Authenticator
 
 # Install Flatpaks
 sudo flatpak install -y appcenter com.github.bluesabre.darkbar
-sudo flatpak install -y flathub org.gtk.Gtk3theme.Adwaita-dark
 sudo flatpak install -y flathub org.gnome.PasswordSafe
 sudo flatpak install -y flathub com.spotify.Client
 sudo flatpak install -y flathub org.gimp.GIMP
 sudo flatpak install -y flathub org.blender.Blender
-#sudo flatpak install -y flathub org.videolan.VLC
 sudo flatpak install -y flathub org.chromium.Chromium
 sudo flatpak install -y flathub com.github.tchx84.Flatseal
 sudo flatpak install -y flathub-beta com.google.Chrome
@@ -159,7 +156,6 @@ tee -a ~/.var/app/com.google.Chrome/config/chrome-flags.conf << EOF
 --enable-gpu-rasterization
 --enable-zero-copy
 --enable-features=VaapiVideoDecoder
---use-vulkan
 EOF
 
 # Chromium - Enable GPU acceleration
@@ -169,7 +165,6 @@ tee -a ~/.var/app/org.chromium.Chromium/config/chromium-flags.conf << EOF
 --enable-gpu-rasterization
 --enable-zero-copy
 --enable-features=VaapiVideoDecoder
---use-vulkan
 EOF
 
 # Install VSCode
