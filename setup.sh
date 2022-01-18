@@ -176,7 +176,7 @@ tee -a ${HOME}/.config/Code/User/settings.json << EOF
     "workbench.enableExperiments": false,
     "workbench.settings.enableNaturalLanguageSearch": false,
     "workbench.iconTheme": "material-icon-theme",
-    "editor.fontWeight": "610"
+    "editor.fontWeight": "600"
 }
 EOF
 
