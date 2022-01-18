@@ -11,13 +11,9 @@ GOLANG_VERSION=1.17.6
 # Install common software
 sudo apt -y install git build-essential meson valac software-properties-common curl git
 
-# Allow Flatpaks to access themes and icons
-sudo flatpak override --filesystem=/usr/share/themes:ro
-sudo flatpak override --filesystem=/usr/share/icons:ro
-
 # Install current theme as Flatpak
 sudo apt -y install ostree appstream-util
-git clone https://github.com/gjpin/stylepak.git
+git clone https://github.com/refi64/stylepak.git
 cd stylepak
 chmod +x stylepak
 ./stylepak install-system
@@ -121,13 +117,9 @@ rm install.sh
 # Set Firefox Flatpak as default browser
 xdg-settings set default-web-browser org.mozilla.firefox.desktop
 
-# Install Authenticator
-flatpak install -y flathub com.belmoussaoui.Authenticator
-sudo flatpak override --nodevice=all com.belmoussaoui.Authenticator
-sudo flatpak override --unshare=network com.belmoussaoui.Authenticator
-
 # Install Flatpaks
 sudo flatpak install -y appcenter com.github.bluesabre.darkbar
+sudo flatpak install -y appcenter io.github.jhaygood86.mauborgne
 sudo flatpak install -y flathub org.gnome.PasswordSafe
 sudo flatpak install -y flathub com.spotify.Client
 sudo flatpak install -y flathub org.gimp.GIMP
