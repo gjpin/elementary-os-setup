@@ -5,9 +5,6 @@ VAULT_VERSION=1.9.2
 TERRAFORM_VERSION=1.1.2
 GOLANG_VERSION=1.17.6
 
-# Install HWE edge kernel
-# sudo apt -y install linux-generic-hwe-20.04-edge
-
 # Install common software
 sudo apt -y install git build-essential meson valac software-properties-common curl git
 
@@ -175,10 +172,11 @@ tee -a ${HOME}/.config/Code/User/settings.json << EOF
     "telemetry.telemetryLevel": "off",
     "window.menuBarVisibility": "toggle",
     "workbench.startupEditor": "none",
-    "editor.fontFamily": "'Noto Sans Mono', 'Droid Sans Mono', 'monospace', monospace, 'Droid Sans Fallback'",
+    "editor.fontFamily": "'Noto Sans Mono', 'Droid Sans Mono', 'monospace', 'Droid Sans Fallback'",
     "workbench.enableExperiments": false,
     "workbench.settings.enableNaturalLanguageSearch": false,
-    "workbench.iconTheme": "material-icon-theme"
+    "workbench.iconTheme": "material-icon-theme",
+    "editor.fontWeight": "610"
 }
 EOF
 
