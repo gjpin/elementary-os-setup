@@ -79,7 +79,7 @@ rm terraform.zip
 wget https://golang.org/dl/go${GOLANG_VERSION}.linux-amd64.tar.gz
 sudo rm -rf /usr/local/go
 sudo tar -C /usr/local -xzf go${GOLANG_VERSION}.linux-amd64.tar.gz
-grep -qxF 'export PATH=$PATH:/usr/local/go/bin' ~/.bashrc.d/exports || echo 'export PATH=$PATH:/usr/local/go/bin' >> ~/.bashrc.d/exports
+grep -qxF 'export PATH=$PATH:/usr/local/go/bin' ${HOME}/.profile || echo 'export PATH=$PATH:/usr/local/go/bin' >> ${HOME}/.profile
 rm go${GOLANG_VERSION}.linux-amd64.tar.gz
 
 # Install hey
