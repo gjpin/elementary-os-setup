@@ -5,6 +5,10 @@ VAULT_VERSION=1.9.2
 TERRAFORM_VERSION=1.1.2
 GOLANG_VERSION=1.17.6
 
+# Avoid GRUB menu timeout
+echo 'GRUB_RECORDFAIL_TIMEOUT=$GRUB_TIMEOUT' | sudo tee -a /etc/default/grub > /dev/null
+sudo update-grub
+
 # Install common software
 sudo apt -y install git build-essential meson valac software-properties-common curl git
 
