@@ -26,6 +26,8 @@ gsettings set org.gnome.settings-daemon.plugins.media-keys area-screenshot "['<S
 gsettings set org.gnome.settings-daemon.plugins.media-keys home "['<Super>e']"
 gsettings set org.gnome.settings-daemon.plugins.media-keys terminal "['<Super>Return']"
 gsettings set org.gnome.desktop.wm.keybindings close "['<Shift><Super>q']"
+gsettings set org.pantheon.desktop.gala.keybindings cycle-workspaces-next "['<Primary>Tab']"
+gsettings set org.gnome.desktop.wm.keybindings show-desktop "['<Super>Tab']"
 
 # Misc changes
 gsettings set io.elementary.desktop.wingpanel.power show-percentage true
