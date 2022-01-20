@@ -1,8 +1,4 @@
 # Versions
-NOMAD_VERSION=1.2.3
-CONSUL_VERSION=1.11.2
-VAULT_VERSION=1.9.2
-TERRAFORM_VERSION=1.1.2
 GOLANG_VERSION=1.17.6
 
 # Avoid GRUB menu timeout
@@ -54,29 +50,14 @@ sudo apt -y install gnome-system-monitor gnome-disk-utility
 sudo apt -y install syncthing
 sudo systemctl enable --now syncthing@${USER}.service
 
-# Install Nomad
-curl -sSL https://releases.hashicorp.com/nomad/${NOMAD_VERSION}/nomad_${NOMAD_VERSION}_linux_amd64.zip -o nomad.zip
-unzip nomad.zip
-sudo mv nomad /usr/local/bin
-rm nomad.zip
+# Install Hashi stack
+curl -fsSL https://apt.releases.hashicorp.com/gpg | sudo apt-key add -
+sudo apt-add-repository --yes "deb [arch=amd64] https://apt.releases.hashicorp.com focal main"
+sudo apt update && sudo apt install consul nomad terraform vault
 
-# Install Consul
-curl -sSL https://releases.hashicorp.com/consul/${CONSUL_VERSION}/consul_${CONSUL_VERSION}_linux_amd64.zip -o consul.zip
-unzip consul.zip
-sudo mv consul /usr/local/bin
-rm consul.zip
-
-# Install Vault
-curl -sSL https://releases.hashicorp.com/vault/${VAULT_VERSION}/vault_${VAULT_VERSION}_linux_amd64.zip -o vault.zip
-unzip vault.zip
-sudo mv vault /usr/local/bin
-rm vault.zip
-
-# Install Terraform
-curl -sSL https://releases.hashicorp.com/terraform/${TERRAFORM_VERSION}/terraform_${TERRAFORM_VERSION}_linux_amd64.zip -o terraform.zip
-unzip terraform.zip
-sudo mv terraform /usr/local/bin
-rm terraform.zip
+# Install Ansible
+sudo add-apt-repository --yes --update ppa:ansible/ansible
+sudo apt install ansible
 
 # Install Golang
 wget https://golang.org/dl/go${GOLANG_VERSION}.linux-amd64.tar.gz
