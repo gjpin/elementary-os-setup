@@ -125,6 +125,7 @@ sudo flatpak install -y appcenter com.github.bluesabre.darkbar
 sudo flatpak install -y appcenter io.github.jhaygood86.mauborgne
 sudo flatpak install -y appcenter com.github.muriloventuroso.easyssh
 sudo flatpak install -y appcenter com.github.alecaddd.sequeler
+sudo flatpak install -y appcenter com.github.philip_scott.notes-up
 sudo flatpak install -y flathub org.gnome.PasswordSafe
 sudo flatpak install -y flathub com.spotify.Client
 sudo flatpak install -y flathub org.gimp.GIMP
@@ -133,7 +134,6 @@ sudo flatpak install -y flathub org.chromium.Chromium
 sudo flatpak install -y flathub com.github.tchx84.Flatseal
 sudo flatpak install -y flathub-beta com.google.Chrome
 sudo flatpak install -y flathub org.libreoffice.LibreOffice
-sudo flatpak install -y flathub md.obsidian.Obsidian
 
 # Install Steam and allow Steam Link on local network
 # sudo flatpak install flathub com.valvesoftware.Steam
