@@ -173,6 +173,7 @@ EOF
 code --install-extension PKief.material-icon-theme
 code --install-extension golang.Go
 code --install-extension HashiCorp.terraform
+code --install-extension redhat.ansible
 
 # Install Docker
 sudo apt -y install docker.io
