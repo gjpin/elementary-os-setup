@@ -108,6 +108,7 @@ sudo flatpak install -y appcenter com.github.muriloventuroso.easyssh
 sudo flatpak install -y appcenter com.github.alecaddd.sequeler
 sudo flatpak install -y appcenter com.github.philip_scott.notes-up
 sudo flatpak install -y appcenter com.github.manexim.insomnia
+sudo flatpak install -y appcenter com.github.treagod.spectator
 sudo flatpak install -y flathub org.gnome.PasswordSafe
 sudo flatpak install -y flathub com.spotify.Client
 sudo flatpak install -y flathub org.gimp.GIMP
