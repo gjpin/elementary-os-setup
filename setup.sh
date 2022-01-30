@@ -129,6 +129,8 @@ sudo flatpak install -y flathub org.libreoffice.LibreOffice
 
 # Install Steam and allow Steam Link on local network
 # sudo flatpak install flathub com.valvesoftware.Steam
+# sudo flatpak install flathub com.valvesoftware.Steam.CompatibilityTool.Proton
+# sudo flatpak install flathub com.valvesoftware.Steam.CompatibilityTool.Proton-GE
 # sudo flatpak override --filesystem=/media/${USER}/data/games/steam com.valvesoftware.Steam
 # sudo ufw allow from 192.168.1.0/24 to any port 27036:27037 proto tcp comment "steam link"
 # sudo ufw allow from 192.168.1.0/24 to any port 27031:27036 proto udp comment "steam link"
