@@ -1,6 +1,10 @@
 # Versions
 GOLANG_VERSION=1.17.6
 MITOGEN_VERSION=0.3.2
+NOMAD_VERSION=1.2.5
+CONSUL_VERSION=1.11.2
+VAULT_VERSION=1.9.3
+TERRAFORM_VERSION=1.1.4
 
 # Create folders
 mkdir -p ${HOME}/src
@@ -55,9 +59,12 @@ sudo apt -y install syncthing
 sudo systemctl enable --now syncthing@${USER}.service
 
 # Install Hashi stack
-curl -fsSL https://apt.releases.hashicorp.com/gpg | sudo apt-key add -
-sudo apt-add-repository --yes "deb [arch=amd64] https://apt.releases.hashicorp.com focal main"
-sudo apt update && sudo apt -y install consul nomad terraform vault
+curl -sSL https://releases.hashicorp.com/nomad/${NOMAD_VERSION}/nomad_${NOMAD_VERSION}_linux_amd64.zip -o hashistack-nomad.zip
+curl -sSL https://releases.hashicorp.com/consul/${CONSUL_VERSION}/consul_${CONSUL_VERSION}_linux_amd64.zip -o hashistack-consul.zip
+curl -sSL https://releases.hashicorp.com/vault/${VAULT_VERSION}/vault_${VAULT_VERSION}_linux_amd64.zip -o hashistack-vault.zip
+curl -sSL https://releases.hashicorp.com/terraform/${TERRAFORM_VERSION}/terraform_${TERRAFORM_VERSION}_linux_amd64.zip -o hashistack-terraform.zip
+sudo unzip 'hashistack-*.zip' -d /usr/local/bin
+rm hashistack-*.zip
 
 # Install Ansible
 sudo add-apt-repository --yes --update ppa:ansible/ansible
