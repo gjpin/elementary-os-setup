@@ -1,6 +1,5 @@
 # Versions
 GOLANG_VERSION=1.17.6
-MITOGEN_VERSION=0.3.2
 NOMAD_VERSION=1.2.5
 CONSUL_VERSION=1.11.2
 VAULT_VERSION=1.9.3
@@ -69,11 +68,6 @@ rm hashistack-*.zip
 # Install Ansible
 sudo add-apt-repository --yes --update ppa:ansible/ansible
 sudo apt -y install ansible
-
-# Install Mitogen
-# wget https://networkgenomics.com/try/mitogen-${MITOGEN_VERSION}.tar.gz
-# tar -xf mitogen-${MITOGEN_VERSION}.tar.gz -C ${HOME}/src
-# rm mitogen-${MITOGEN_VERSION}.tar.gz
 
 # Install Golang
 wget https://golang.org/dl/go${GOLANG_VERSION}.linux-amd64.tar.gz
