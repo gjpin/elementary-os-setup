@@ -72,7 +72,7 @@ curl -sSL https://releases.hashicorp.com/nomad/${NOMAD_VERSION}/nomad_${NOMAD_VE
 curl -sSL https://releases.hashicorp.com/consul/${CONSUL_VERSION}/consul_${CONSUL_VERSION}_linux_amd64.zip -o hashistack-consul.zip
 curl -sSL https://releases.hashicorp.com/vault/${VAULT_VERSION}/vault_${VAULT_VERSION}_linux_amd64.zip -o hashistack-vault.zip
 curl -sSL https://releases.hashicorp.com/terraform/${TERRAFORM_VERSION}/terraform_${TERRAFORM_VERSION}_linux_amd64.zip -o hashistack-terraform.zip
-curl -sSL https://releases.hashicorp.com/packer/${PACKER_VERSION}/packer_${PACKER_VERSION}_linux_amd64.zip -o hashistack-terraform.zip
+curl -sSL https://releases.hashicorp.com/packer/${PACKER_VERSION}/packer_${PACKER_VERSION}_linux_amd64.zip -o hashistack-packer.zip
 unzip 'hashistack-*.zip' -d  ${HOME}/.local/bin
 rm hashistack-*.zip
 
@@ -122,7 +122,7 @@ sudo flatpak install -y appcenter com.github.philip_scott.notes-up
 sudo flatpak install -y appcenter com.github.manexim.insomnia
 sudo flatpak install -y appcenter com.github.treagod.spectator
 sudo flatpak install -y flathub com.usebottles.bottles
-sudo flatpak install -y flathub org.gnome.PasswordSafe
+sudo flatpak install -y flathub org.gnome.World.Secrets
 sudo flatpak install -y flathub com.spotify.Client
 sudo flatpak install -y flathub org.chromium.Chromium
 sudo flatpak install -y flathub com.github.tchx84.Flatseal
