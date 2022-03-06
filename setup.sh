@@ -1,19 +1,23 @@
 # Versions
-GOLANG_VERSION=1.17.6
+GOLANG_VERSION=1.17.8
 NOMAD_VERSION=1.2.5
 CONSUL_VERSION=1.11.2
 VAULT_VERSION=1.9.3
 TERRAFORM_VERSION=1.1.4
+PACKER_VERSION=1.8.0
 
 # Create folders
-mkdir -p ${HOME}/src
+mkdir -p \
+${HOME}/.bashrc.d/ \
+${HOME}/.local/bin \
+${HOME}/src
 
 # Avoid GRUB menu timeout
 echo 'GRUB_RECORDFAIL_TIMEOUT=$GRUB_TIMEOUT' | sudo tee -a /etc/default/grub > /dev/null
 sudo update-grub
 
 # Install common software
-sudo apt -y install git build-essential meson valac software-properties-common curl git
+sudo apt -y install git build-essential meson valac software-properties-common curl git jq
 
 # Install current theme as Flatpak
 sudo apt -y install ostree appstream-util
@@ -23,6 +27,12 @@ chmod +x stylepak
 ./stylepak install-system
 cd ..
 rm -rf stylepak
+
+# Allow Flatpaks to access themes and icons
+sudo flatpak override --filesystem=xdg-data/themes:ro
+sudo flatpak override --filesystem=xdg-data/icons:ro
+sudo flatpak override --filesystem=xdg-config/gtk-3.0:ro
+sudo flatpak override --filesystem=xdg-config/gtk-4.0:ro
 
 # Shortcuts
 gsettings set org.gnome.settings-daemon.plugins.media-keys area-screenshot "['<Shift><Super>s']"
@@ -62,24 +72,24 @@ curl -sSL https://releases.hashicorp.com/nomad/${NOMAD_VERSION}/nomad_${NOMAD_VE
 curl -sSL https://releases.hashicorp.com/consul/${CONSUL_VERSION}/consul_${CONSUL_VERSION}_linux_amd64.zip -o hashistack-consul.zip
 curl -sSL https://releases.hashicorp.com/vault/${VAULT_VERSION}/vault_${VAULT_VERSION}_linux_amd64.zip -o hashistack-vault.zip
 curl -sSL https://releases.hashicorp.com/terraform/${TERRAFORM_VERSION}/terraform_${TERRAFORM_VERSION}_linux_amd64.zip -o hashistack-terraform.zip
-sudo unzip 'hashistack-*.zip' -d /usr/local/bin
+curl -sSL https://releases.hashicorp.com/packer/${PACKER_VERSION}/packer_${PACKER_VERSION}_linux_amd64.zip -o hashistack-terraform.zip
+unzip 'hashistack-*.zip' -d  ${HOME}/.local/bin
 rm hashistack-*.zip
 
 # Install Ansible
-sudo add-apt-repository --yes --update ppa:ansible/ansible
-sudo apt -y install ansible
+sudo add-apt-repository -y --update ppa:ansible/ansible
+sudo apt -y install ansible-core
 
 # Install Golang
 wget https://golang.org/dl/go${GOLANG_VERSION}.linux-amd64.tar.gz
-sudo rm -rf /usr/local/go
-sudo tar -C /usr/local -xzf go${GOLANG_VERSION}.linux-amd64.tar.gz
-grep -qxF 'export PATH=$PATH:/usr/local/go/bin' ${HOME}/.profile || echo 'export PATH=$PATH:/usr/local/go/bin' >> ${HOME}/.profile
+rm -rf ${HOME}/.local/go
+tar -C ${HOME}/.local -xzf go${GOLANG_VERSION}.linux-amd64.tar.gz
+grep -qxF 'export PATH=$PATH:${HOME}/.local/go/bin' ${HOME}/.bashrc.d/exports || echo 'export PATH=$PATH:${HOME}/.local/go/bin' >> ${HOME}/.bashrc.d/exports
 rm go${GOLANG_VERSION}.linux-amd64.tar.gz
 
 # Install hey
-wget https://hey-release.s3.us-east-2.amazonaws.com/hey_linux_amd64
-sudo mv hey_linux_amd64 /usr/local/bin/hey
-chmod +x /usr/local/bin/hey
+curl -sSL https://hey-release.s3.us-east-2.amazonaws.com/hey_linux_amd64 -o ${HOME}/.local/bin/hey
+chmod +x ${HOME}/.local/bin/hey
 
 # Enable Flathub and Flathub Beta repos
 sudo flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
@@ -97,19 +107,11 @@ cd ${HOME}/.var/app/org.mozilla.firefox/.mozilla/firefox/*-release
 tee -a user.js << EOF
 user_pref("toolkit.legacyUserProfileCustomizations.stylesheets", true);
 user_pref("media.ffmpeg.vaapi.enabled", true);
-user_pref("media.rdd-ffmpeg.enabled", true);
 EOF
 cd
 
 # Install Elementary OS Firefox theme
-wget https://raw.githubusercontent.com/Zonnev/elementaryos-firefox-theme/elementaryos-firefox-theme/install.sh
-sed -i 's#${HOME}/.mozilla/firefox#${HOME}/.var/app/org.mozilla.firefox/.mozilla/firefox#g' install.sh
-chmod +x install.sh
-./install.sh
-rm install.sh
-
-# Set Firefox Flatpak as default browser
-xdg-settings set default-web-browser org.mozilla.firefox.desktop
+bash <(wget --quiet --output-document - "https://raw.githubusercontent.com/Zonnev/elementaryos-firefox-theme/elementaryos-firefox-theme/install.sh")
 
 # Install Flatpaks
 sudo flatpak install -y appcenter com.github.bluesabre.darkbar
@@ -122,26 +124,10 @@ sudo flatpak install -y appcenter com.github.treagod.spectator
 sudo flatpak install -y flathub com.usebottles.bottles
 sudo flatpak install -y flathub org.gnome.PasswordSafe
 sudo flatpak install -y flathub com.spotify.Client
-sudo flatpak install -y flathub org.gimp.GIMP
-sudo flatpak install -y flathub org.blender.Blender
 sudo flatpak install -y flathub org.chromium.Chromium
 sudo flatpak install -y flathub com.github.tchx84.Flatseal
 sudo flatpak install -y flathub-beta com.google.Chrome
 sudo flatpak install -y flathub org.libreoffice.LibreOffice
-
-# Install Steam and allow Steam Link on local network
-# sudo flatpak install -y flathub com.valvesoftware.Steam
-# sudo flatpak install -y flathub com.valvesoftware.Steam.CompatibilityTool.Proton
-# sudo flatpak install -y flathub com.valvesoftware.Steam.CompatibilityTool.Proton-GE
-# sudo flatpak install -y flathub com.valvesoftware.Steam.CompatibilityTool.Proton-Exp
-# sudo flatpak override --filesystem=/media/${USER}/data/games/steam com.valvesoftware.Steam
-# sudo ufw allow from 192.168.1.0/24 to any port 27036:27037 proto tcp comment "steam link"
-# sudo ufw allow from 192.168.1.0/24 to any port 27031:27036 proto udp comment "steam link"
-
-# Install Lutris
-# sudo flatpak install flathub-beta net.lutris.Lutris//beta
-# sudo flatpak install flathub org.gnome.Platform.Compat.i386 org.freedesktop.Platform.GL32.default org.freedesktop.Platform.GL.default
-# sudo flatpak override --filesystem=/media/${USER}/data/games/lutris net.lutris.Lutris
 
 # Chrome - Enable GPU acceleration
 mkdir -p ~/.var/app/com.google.Chrome/config
@@ -181,7 +167,15 @@ tee -a ${HOME}/.config/Code/User/settings.json << EOF
     "workbench.enableExperiments": false,
     "workbench.settings.enableNaturalLanguageSearch": false,
     "workbench.iconTheme": "material-icon-theme",
-    "editor.fontWeight": "500"
+    "editor.fontWeight": "500",
+    "redhat.telemetry.enabled": false,
+    "files.associations": {
+        "*.j2": "terraform",
+        "*.hcl": "terraform",
+        "*.bu": "yaml",
+        "*.ign": "json"
+    },
+    "extensions.ignoreRecommendations": true
 }
 EOF
 
@@ -190,6 +184,9 @@ code --install-extension PKief.material-icon-theme
 code --install-extension golang.Go
 code --install-extension HashiCorp.terraform
 code --install-extension redhat.ansible
+code --install-extension dbaeumer.vscode-eslint
+code --install-extension editorconfig.editorconfig
+code --install-extension octref.vetur
 
 # Install Docker
 sudo apt -y install docker.io
