@@ -36,7 +36,7 @@ echo 'GRUB_RECORDFAIL_TIMEOUT=$GRUB_TIMEOUT' | sudo tee -a /etc/default/grub > /
 sudo update-grub
 
 # Install common software
-sudo apt -y install git build-essential meson valac software-properties-common curl git jq
+sudo apt -y install git curl jq ffmpeg vainfo build-essential meson valac software-properties-common 
 
 # Install current theme as Flatpak
 sudo apt -y install ostree appstream-util
